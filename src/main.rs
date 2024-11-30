@@ -18,7 +18,7 @@ impl Cinit {
         let cinit = Cinit(Args::parse());
         let _ = fs::create_dir(cinit.clone().0.project_name);
 
-        return cinit;
+        cinit
     }
 
     fn create_sub_directory(&self, sub_dir: &str) {
