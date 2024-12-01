@@ -1,5 +1,4 @@
 use clap::Parser;
-use core::panic;
 use std::fs::{self, File};
 
 /// Command line tool for C projects
@@ -21,26 +20,20 @@ impl Cinit {
         cinit
     }
 
-    fn create_sub_directory(&self, sub_dir: &str) {
+    fn create_sub_directory(&self, sub_dir: &str) -> Result<(), std::io::Error> {
         let full_path = format!("./{}/{}", &self.0.project_name, &sub_dir);
-
-        match fs::create_dir_all(&full_path) {
-            Ok(_) => println!("dir: {} created", full_path),
-            Err(e) => panic!("{e}"),
-        }
+        fs::create_dir_all(&full_path)?;
+        Ok(())
     }
 
-    fn create_file(&self, sub_dir: &str, name: &str) {
+    fn create_file(&self, sub_dir: &str, name: &str) -> Result<(), Box<dyn std::error::Error>> {
         let file_dir = if sub_dir.is_empty() {
             format!("./{}/{}", self.0.project_name, name)
         } else {
             format!("./{}/{}/{}", self.0.project_name, sub_dir, name)
         };
 
-        match File::create(&file_dir) {
-            Ok(_) => println!("File: {} created", file_dir),
-            Err(e) => eprintln!("Error creating file: {} - {}", file_dir, e),
-        }
+        File::create(&file_dir)?;
 
         // Writting deafult code
         if name == "main.c" {
@@ -52,6 +45,8 @@ impl Cinit {
         } else {
             self.write_default_content(&file_dir);
         }
+
+        Ok(())
     }
 
     fn write_main_c(&self, file_dir: &str) {
@@ -82,15 +77,19 @@ impl Cinit {
     }
 }
 
-fn create_project() {
+fn create_project() -> Result<(), Box<dyn std::error::Error>> {
     let cinit = Cinit::new();
 
-    cinit.create_sub_directory("src");
-    cinit.create_file("src", "main.c");
-    cinit.create_file("", "README.md");
-    cinit.create_file("", "Makefile");
+    cinit.create_sub_directory("src")?;
+    cinit.create_file("src", "main.c")?;
+    cinit.create_file("", "README.md")?;
+    cinit.create_file("", "Makefile")?;
+    Ok(())
 }
 
 fn main() {
-    create_project();
+    match create_project() {
+        Ok(_) => println!("Enjoy coding :)"),
+        Err(err) => eprintln!("ERROR: {}", err),
+    }
 }
