@@ -7,6 +7,10 @@ use std::fs::{self, File};
 struct Args {
     /// Name of the project
     project_name: String,
+
+    /// Create lib directory whith files named <FILE>.c and <FILE>.h
+    #[arg(long, value_name = "FILE")]
+    lib: Option<String>,
 }
 
 #[derive(Clone)]
@@ -75,15 +79,28 @@ impl Cinit {
         let _ = fs::write(file_dir, content);
         println!("Content written to {}", file_dir);
     }
+
+    fn create_lib_folder(&self, file_name: &str) -> Result<(), Box<dyn std::error::Error>> {
+        self.create_sub_directory("lib")?;
+        self.create_file("lib", format!("{file_name}.c").as_str())?;
+        self.create_file("lib", format!("{file_name}.h").as_str())?;
+        Ok(())
+    }
 }
 
 fn create_project() -> Result<(), Box<dyn std::error::Error>> {
     let cinit = Cinit::new();
 
     cinit.create_sub_directory("src")?;
+
+    if let Some(file_name) = &cinit.0.lib {
+        cinit.create_lib_folder(file_name)?;
+    }
+
     cinit.create_file("src", "main.c")?;
     cinit.create_file("", "README.md")?;
     cinit.create_file("", "Makefile")?;
+
     Ok(())
 }
 
