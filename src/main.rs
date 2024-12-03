@@ -26,10 +26,9 @@ enum Commands {
     },
 
     /// Build ./src/*.c files and moved to ./bin/
-    CBuild,
-
+    BuildC,
     /// Build and run project
-    CBulidRun,
+    BulidCRunC,
 }
 
 #[derive(Clone)]
@@ -55,7 +54,7 @@ fn c_new(project_name: &String, lib: Option<String>) -> Result<(), Box<dyn std::
     Ok(())
 }
 
-fn c_build() -> Result<(), std::io::Error> {
+fn build_c() -> Result<(), std::io::Error> {
     // Ejecutar GCC para compilar el programa
     let gcc_status = Command::new("gcc")
         .args(["src/main.c", "-Wall", "-o", "main"])
@@ -165,11 +164,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             Commands::CNew { project_name, lib } => {
                 c_new(&project_name, lib)?;
             }
-            Commands::CBuild => {
-                c_build()?;
+            Commands::BuildC => {
+                build_c()?;
                 //println!("{:?}", std::env::current_dir())
             }
-            Commands::CBulidRun => eprintln!("Developing"),
+            Commands::BulidCRunC => eprintln!("Developing"),
         }
     }
 
