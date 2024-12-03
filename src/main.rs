@@ -1,4 +1,4 @@
-use clap::{builder::Str, Parser, Subcommand};
+use clap::{Parser, Subcommand};
 use std::{
     fs::{self, File},
     process::Command,
@@ -62,11 +62,9 @@ fn c_build() -> Result<(), std::io::Error> {
         .status()
         .expect("Failed to execute GCC");
 
-    if let Ok(actual_path) = std::env::current_dir(){
+    if let Ok(actual_path) = std::env::current_dir() {
         fs::create_dir(format!("{}/bin", actual_path.display()).as_str())?;
-        
     }
-    
 
     if gcc_status.success() {
         println!("Compilation successful!");
