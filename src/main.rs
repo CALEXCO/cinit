@@ -17,7 +17,7 @@ struct Args {
 #[derive(Subcommand, Debug, Clone)]
 enum Commands {
     /// Create new C Proejct with name
-    CNew {
+    New {
         project_name: String,
 
         /// Create lib directory whith files named <FILE>.c and <FILE>.h
@@ -26,9 +26,9 @@ enum Commands {
     },
 
     /// Build ./src/*.c files and moved to ./bin/
-    BuildC,
+    Build,
     /// Build and run project
-    BulidCRunC,
+    BulidRun,
 }
 
 #[derive(Clone)]
@@ -40,7 +40,7 @@ impl Cinit {
     }
 }
 
-fn c_new(project_name: &String, lib: Option<String>) -> Result<(), Box<dyn std::error::Error>> {
+fn new(project_name: &String, lib: Option<String>) -> Result<(), Box<dyn std::error::Error>> {
     create_sub_directory(project_name, "src")?;
 
     if let Some(lib_file_name) = lib {
@@ -54,7 +54,7 @@ fn c_new(project_name: &String, lib: Option<String>) -> Result<(), Box<dyn std::
     Ok(())
 }
 
-fn build_c() -> Result<(), std::io::Error> {
+fn build() -> Result<(), std::io::Error> {
     // Ejecutar GCC para compilar el programa
     let gcc_status = Command::new("gcc")
         .args(["src/main.c", "-Wall", "-o", "main"])
@@ -161,14 +161,14 @@ fn create_lib_folder(
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     if let Some(command) = Cinit::new().0.command {
         match command {
-            Commands::CNew { project_name, lib } => {
-                c_new(&project_name, lib)?;
+            Commands::New { project_name, lib } => {
+                new(&project_name, lib)?;
             }
-            Commands::BuildC => {
-                build_c()?;
+            Commands::Build => {
+                build()?;
                 //println!("{:?}", std::env::current_dir())
             }
-            Commands::BulidCRunC => eprintln!("Developing"),
+            Commands::BulidRun => todo!("Developing"),
         }
     }
 
