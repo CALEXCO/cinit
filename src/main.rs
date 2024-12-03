@@ -58,7 +58,7 @@ fn c_new(project_name: &String, lib: Option<String>) -> Result<(), Box<dyn std::
 fn c_build() -> Result<(), std::io::Error> {
     // Ejecutar GCC para compilar el programa
     let gcc_status = Command::new("gcc")
-        .args(&["src/main.c", "-Wall", "-o", "main"])
+        .args(["src/main.c", "-Wall", "-o", "main"])
         .status()
         .expect("Failed to execute GCC");
 
