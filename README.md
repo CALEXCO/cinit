@@ -39,13 +39,13 @@ cinit help
 
 ### Commands
 
-#### `c-new`
+#### `new`
 Create a new C project with the specified name.
 
 **Usage:**
 
 ```bash
-cinit c-new [OPTIONS] <PROJECT_NAME>
+cinit new [OPTIONS] <PROJECT_NAME>
 ```
 
 **Arguments:**
@@ -56,7 +56,7 @@ cinit c-new [OPTIONS] <PROJECT_NAME>
 
 **Example:**
 ```bash
-cinit c-new my_project --lib my_library
+cinit new my_project --lib my_library
 ```
 
 This will create a directory `my_project` with the following structure:
@@ -71,13 +71,13 @@ my_project/
 └── bin/
 ```
 
-#### `build-c`
+#### `build`
 Compile all `.c` files in the `src/` directory and move the binary to the `bin/` directory.
 
 **Usage:**
 
 ```bash
-cinit build-c
+cinit build
 ```
 
 **Description:**
@@ -87,20 +87,20 @@ cinit build-c
 
 **Example:**
 ```bash
-cinit build-c
+cinit build
 ```
 
-#### `build-c-run-c`
+#### `build-run`
 Build and run your project in a single command.
 
 **Usage:**
 
 ```bash
-cinit build-c-run-c
+cinit build-run
 ```
 
 **Description:**
-- Builds the project as described in `build-c`.
+- Builds the project as described in `build`.
 - Immediately executes the resulting binary.
 
 #### `help`
@@ -115,7 +115,7 @@ cinit help
 **Example:**
 To see help for a specific command, use:
 ```bash
-cinit help c-new
+cinit help new
 ```
 
 ---
@@ -124,13 +124,13 @@ cinit help c-new
 
 1. **Create a new project:**
    ```bash
-   cinit c-new my_project
+   cinit new my_project
    cd my_project
    ```
 
 2. **Build the project:**
    ```bash
-   cinit build-c
+   cinit build
    ```
 
 3. **Run the binary:**
