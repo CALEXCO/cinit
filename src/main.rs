@@ -28,6 +28,7 @@ enum Commands {
     /// Build ./src/*.c files and moved to ./bin/
     Build,
     /// Build and run project
+
     BuildRun,
 }
 
@@ -183,6 +184,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             Commands::BuildRun => {
                 build_run()?;
             }
+
         }
     }
 
