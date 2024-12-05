@@ -1,10 +1,10 @@
+# cinit
 
-# CInit - Command Line Tool for C Projects
-
-**CInit** is a command-line utility designed to simplify the workflow for creating, building, and running C projects. It provides a set of commands to automate common tasks, such as initializing project structures, compiling source files, and managing binaries.
+**cinit** is a CLI tool built in **Rust** to simplify the creation of new C projects. It provides a quick and standardized way to generate the basic structure for a C project, inspired by tools like `cargo` (Rust) or `zig init` (Zig).
 
 ## Features
 
+- Automatic generation of the basic structure for a C project.
 - Quickly create new C projects with standard folder structures.
 - Build all `.c` files in the `./src/` directory.
 - Move compiled binaries to the `./bin/` directory.
@@ -133,9 +133,4 @@ cinit help new
    cinit build
    ```
 
-3. **Run the binary:**
-   ```bash
-   ./bin/main
-   ```
 
----

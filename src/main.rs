@@ -28,7 +28,8 @@ enum Commands {
     /// Build ./src/*.c files and moved to ./bin/
     Build,
     /// Build and run project
-    BulidRun,
+
+    BuildRun,
 }
 
 #[derive(Clone)]
@@ -86,6 +87,18 @@ fn build() -> Result<(), std::io::Error> {
             "GCC compilation failed",
         ))
     }
+}
+
+fn build_run() -> Result<(), std::io::Error> {
+    if !fs::exists("./bin").expect("Cannot check if file exist") {
+        build()?;
+    }
+
+    let _exec_status = Command::new("./bin/main")
+        .status()
+        .expect("Failed to execute GCC");
+
+    Ok(())
 }
 
 fn create_sub_directory(project_name: &String, sub_dir: &str) -> Result<(), std::io::Error> {
@@ -168,7 +181,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 build()?;
                 //println!("{:?}", std::env::current_dir())
             }
-            Commands::BulidRun => todo!("Developing"),
+            Commands::BuildRun => {
+                build_run()?;
+            }
+
         }
     }
 
